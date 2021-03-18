@@ -16,6 +16,14 @@ VERSION = '0.0.1'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
+    'requests',
+    'pyyaml',
+    'appdirs',
+    'click',
+    'validators',
+    'beautifulsoup4',
+    'rich',
+    'pysocks',
 ]
 
 # What packages are optional?
@@ -31,6 +39,7 @@ TESTS_REQUIRE = [
 
 # console scripts
 CONSOLE_SCRIPTS = [
+    'sci-dl:sci_dl:sci_dl'
 ]
 
 # The rest you shouldn't have to touch too much :)
