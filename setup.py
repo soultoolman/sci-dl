@@ -12,7 +12,7 @@ URL = 'https://github.com/soultoolman/sci-dl'
 EMAIL = 'soultooman@gmail.com'
 AUTHOR = 'soultoolman'
 REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '0.0.1'
+VERSION = '0.0.2'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
@@ -39,7 +39,7 @@ TESTS_REQUIRE = [
 
 # console scripts
 CONSOLE_SCRIPTS = [
-    'sci-dl:sci_dl:sci_dl'
+    'sci-dl=sci_dl:sci_dl'
 ]
 
 # The rest you shouldn't have to touch too much :)
