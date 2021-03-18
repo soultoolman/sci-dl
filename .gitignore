@@ -5,4 +5,4 @@ build
 __pycache__
 .pytest_cache
 sci_dl.pot
-sci_dl.spec
+sci-dl.spec

@@ -39,6 +39,7 @@ TESTS_REQUIRE = [
 
 # console scripts
 CONSOLE_SCRIPTS = [
+    'sci-dl:sci_dl:sci_dl'
 ]
 
 # The rest you shouldn't have to touch too much :)
