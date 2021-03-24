@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-import sci_dl
+from sci_dl import sci_dl
 
 
 @pytest.fixture
@@ -21,7 +21,7 @@ def pmid():
 
 @pytest.fixture()
 def sh1(base_url):
-    return sci_dl.SciHub(base_url)
+    return sci_dl.Sci(base_url)
 
 
 def test_is_valid_doi(doi, pmid):
@@ -60,11 +60,11 @@ class TestSciHub(object):
 
     def test_get_matchmaker_url_with_pmid(self, sh1, pmid):
         with pytest.raises(sci_dl.SciDlError):
-            sh1.get_matchmaker_url(pmid)
+            sh1.get_matchmaker_url_for_doi(pmid)
 
     def test_get_matchmaker_url_with_doi(self, sh1, doi):
         url = 'https://sci-hub.se/10.1002/9781118445112.stat06003'
-        assert sh1.get_matchmaker_url(doi) == url
+        assert sh1.get_matchmaker_url_for_doi(doi) == url
 
     def test_clean_pdf_url(self, sh1):
         pdf_url = sh1.clean_pdf_url(

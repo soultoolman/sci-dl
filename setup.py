@@ -3,7 +3,7 @@
 import io
 import os
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 # Package meta-data.
 NAME = 'sci-dl'
@@ -12,22 +12,23 @@ URL = 'https://github.com/soultoolman/sci-dl'
 EMAIL = 'soultooman@gmail.com'
 AUTHOR = 'soultoolman'
 REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '0.0.2'
+VERSION = '0.1.0'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
     'requests',
-    'pyyaml',
-    'appdirs',
-    'click',
-    'validators',
     'beautifulsoup4',
-    'rich',
-    'pysocks',
 ]
 
 # What packages are optional?
 EXTRAS = {
+    'cmd': [
+        'appdirs',
+        'click',
+        'validators',
+        'rich',
+        'pysocks',
+    ]
 }
 
 
@@ -39,7 +40,7 @@ TESTS_REQUIRE = [
 
 # console scripts
 CONSOLE_SCRIPTS = [
-    'sci-dl=sci_dl:sci_dl'
+    'sci-dl=sci_dl.main:sci_dl'
 ]
 
 # The rest you shouldn't have to touch too much :)
@@ -79,7 +80,7 @@ setup(
     python_requires=REQUIRES_PYTHON,
     url=URL,
     # If your package is a single module, use this instead of 'packages':
-    py_modules=['sci_dl'],
+    packages=find_packages(exclude=['tests']),
 
     entry_points={
         'console_scripts': CONSOLE_SCRIPTS
