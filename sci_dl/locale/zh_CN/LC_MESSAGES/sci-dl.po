@@ -1,0 +1,152 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: sci-dl\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-23 19:15+0800\n"
+"PO-Revision-Date: 2021-03-23 18:39+0800\n"
+"Last-Translator: soultoolman <soultoolman@gmail.com>\n"
+"Language-Team: soultoolman <soultoolman@gmail.com>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: sci_dl/sci_dl.py:96
+msgid "retrying..."
+msgstr "重试中..."
+
+#: sci_dl/sci_dl.py:97
+#, python-format
+msgid "download %s failure"
+msgstr "%s下载失败"
+
+#: sci_dl/sci_dl.py:111
+#, python-format
+msgid "invalid DOI %s"
+msgstr "错误的DOI号%s"
+
+#: sci_dl/sci_dl.py:166 sci_dl/main.py:72
+#, python-format
+msgid "malformed configuration, can't find %s"
+msgstr "配置文件已损坏，没有找到配置项%s"
+
+#: sci_dl/sci_dl.py:192 sci_dl/main.py:283
+#, python-format
+msgid "Failed to parse PDF url of DOI %s"
+msgstr "解析DOI号%s对应的PDF地址失败"
+
+#: sci_dl/main.py:53
+msgid "Unknown error occurred, please refer to log file to get more detail."
+msgstr "发生未知错误，想要获取更多详情，请去日志查看。"
+
+#: sci_dl/main.py:63
+#, fuzzy, python-format
+msgid ""
+"configuration file %s does not exists, please run \"sci-dl init-config\" to "
+"create it."
+msgstr "配置文件%s不存在，请运行“sci-dl init-config”创建。"
+
+#: sci_dl/main.py:113
+msgid "SciHub base url"
+msgstr "SciHub地址"
+
+#: sci_dl/main.py:118
+#, python-format
+msgid "Invalid base_url %s"
+msgstr "错误的地址%s"
+
+#: sci_dl/main.py:123
+msgid "Number of failure download retries"
+msgstr "下载错误失败下载重试次数"
+
+#: sci_dl/main.py:129
+#, python-format
+msgid "invalid number of failure download retries %s, must between %s and %s"
+msgstr "错误的失败下载重试次数%s，必须在%s和%s之间"
+
+#: sci_dl/main.py:135
+msgid "Do you want to use a proxy?"
+msgstr "你想要使用代理吗？"
+
+#: sci_dl/main.py:146
+msgid "Protocol of your proxy"
+msgstr "代理的协议"
+
+#: sci_dl/main.py:153
+msgid "User of your proxy, leave blank if not need"
+msgstr "代理的用户，如果没有可以留空"
+
+#: sci_dl/main.py:159
+msgid "Password of your proxy, leave blank if not need"
+msgstr "代理的密码，如果没有可以留空"
+
+#: sci_dl/main.py:166
+msgid "Host of your proxy"
+msgstr "代理服务器地址"
+
+#: sci_dl/main.py:175
+#, python-format
+msgid "Invalid host %s"
+msgstr "错误的代理服务器地址%s"
+
+#: sci_dl/main.py:180
+msgid "Port of your proxy"
+msgstr "代理端口"
+
+#: sci_dl/main.py:185
+#, python-format
+msgid "Invalid port %s, should between 1 and 65535"
+msgstr "错误的端口%s，应该在1到65535之间"
+
+#: sci_dl/main.py:190
+msgid "Log file"
+msgstr "日志文件"
+
+#: sci_dl/main.py:199
+#, python-format
+msgid "Invalid log file %s"
+msgstr "错误的日志文件"
+
+#: sci_dl/main.py:204
+msgid "Where you want to save PDF file"
+msgstr "保存PDF文件的地址"
+
+#: sci_dl/main.py:209
+#, python-format
+msgid "Invalid directory %s"
+msgstr "错误的目录%s"
+
+#: sci_dl/main.py:213
+msgid "Enable DEBUG mode?"
+msgstr "打开调试模式？"
+
+#: sci_dl/main.py:230
+#, python-format
+msgid "Configurations saved, you can edit \"%s\" if needed."
+msgstr "配置文件保存在%s，如有必要你可以自行修改。"
+
+#: sci_dl/main.py:274
+#, python-format
+msgid "Received DOI [bold][green]%s[/green][/bold]"
+msgstr "收到DOI号[bold][green]%s[/green][/bold]"
+
+#: sci_dl/main.py:286
+#, python-format
+msgid "Find PDF url %s"
+msgstr "解析到PDF文件地址%s"
+
+#: sci_dl/main.py:292
+#, python-format
+msgid "Failed to Download PDF url %s of DOI %s"
+msgstr "下载PDf地址失败，对应的DOI号%s"
+
+#: sci_dl/main.py:306
+#, python-format
+msgid "Congratulations, PDF was saved to %s successfully."
+msgstr "恭喜，PDF成功保存在%s。"

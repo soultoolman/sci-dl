@@ -1,3 +1,2 @@
 include README.md
-include sci-dl.icns
-recursive-include locale
+recursive-include sci_dl/locale *.mo
