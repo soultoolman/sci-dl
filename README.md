@@ -1,4 +1,4 @@
-# :green_book: sci-dl: help you download SciHub PDF programmatically
+# sci-dl: help you download SciHub PDF faster
 
 ## Features
 
@@ -13,44 +13,16 @@
 
 ## Installation
 
-### Windows
+### use as command line software
 
-coming soon.
+```shell
+pip install 'sci-dl[cmd]'
+```
 
-### macOS
-
-coming soon.
-
-### Linux
-
-coming soon.
-
-### use pip
+### use as Python library
 
 ```shell
 pip install sci-dl
-```
-
-### build using setuptools
-
-```shell
-git clone https://github.com/soultoolman/sci-dl.git
-cd sci-dl
-python setup.py install
-```
-
-### build using pyinstaller
-
-```shell
-pip install pyinstaller
-```
-
-```shell
-git clone https://github.com/soultoolman/sci-dl.git
-cd sci-dl
-pyinstaller --name sci-dl -i sci-dl.icns --add-data locale:locale sci_dl.py
-# for windows
-# pyinstaller --name sci-dl -i sci-dl.icns --add-data locale;locale sci_dl.py
 ```
 
 ## Usage
@@ -76,71 +48,54 @@ sci-dl dl -d '10.1016/j.neuron.2012.02.004'
 
 > sci_dl.SciDlError raises when exception happens.
 
-#### if you don't use proxy
+#### if you don't have a proxy
 
 ```python
-from sci_dl import SciHub, Dl
+from sci_dl import dl_by_doi
 
 
-doi = '10.1016/j.neuron.2012.02.004'
-sh = SciHub('https://sci-hub.se')
-dl = Dl(5)  # 5 is the number of retries when failure
+config = {
+    'base_url': 'https://sci-hub.se',  # sci-hub URL
+    'retries': 5,  # number of failure retries
+    'use_proxy': False  # means you don't want to use a proxy
+}
 
-# get matchmaker response
-matchmaker_url = sh.get_matchmaker_url('10.1016/j.neuron.2012.02.004')
-matchmaker_response = dl.dl(matchmaker_url)
-
-# parse PDF url
-pdf_url = sh.parse_pdf_url(matchmaker_response.text)
-
-# get PDF response
-pdf_response = dl.dl(pdf_url)
-
-# save PDF content once
-with open('xxx', 'wb') as handle:
-    handle.write(pdf_response.content)
-
-# save chunk by chunk
-chunk_size = 1024
-with open('xxx', 'wb') as handle:
-    for chunk in pdf_response.iter_content(chunk_size):
-        handle.write(chunk)
+response = dl_by_doi('10.1016/j.neuron.2012.02.004', config)
 ```
 
-#### if you use a proxy
+### if you use a proxy
 
 ```python
-from sci_dl import SciHub, Dl, Proxy
+from sci_dl import dl_by_doi
 
 
-doi = '10.1016/j.neuron.2012.02.004'
-sh = SciHub('https://sci-hub.se')
-proxy = Proxy(
-    protocol='socks5',
-    user=None,
-    password=None,
-    host='127.0.0.1',
-    port=6153
-)
-dl = Dl(5, proxy=proxy)  # 5 is the number of retries when failure
+config = {
+    'base_url': 'https://sci-hub.se',  # sci-hub URL
+    'retries': 5,  # number of failure retries
+    'use_proxy': True,  # means you don't want to use a proxy
+    'proxy_protocol': 'socks5',  # available protocols: http https socks5
+    'proxy_user': None,  # proxy user, if your proxy don't need one, you can pass None
+    'proxy_password': None,  # proxy password, if your proxy don't need one, you can pass None
+    'proxy_host': '127.0.0.1',  # proxy host
+    'proxy_port': 1080  # proxy port
+}
 
-# get matchmaker response
-matchmaker_url = sh.get_matchmaker_url('10.1016/j.neuron.2012.02.004')
-matchmaker_response = dl.dl(matchmaker_url)
+response = dl_by_doi('10.1016/j.neuron.2012.02.004', config)
+```
 
-# parse PDF url
-pdf_url = sh.parse_pdf_url(matchmaker_response.text)
+### how to save response?
 
-# get PDF response
-pdf_response = dl.dl(pdf_url)
+#### get all content one time
 
-# save PDF content once
-with open('xxx', 'wb') as handle:
-    handle.write(pdf_response.content)
+```python
+with open('xxx.pdf', 'wb') as fp:
+    fp.write(response.content)
+```
 
-# save chunk by chunk
-chunk_size = 1024
-with open('xxx', 'wb') as handle:
-    for chunk in pdf_response.iter_content(chunk_size):
-        handle.write(chunk)
+#### chunk by chunk
+
+```python
+with open('xxx.pdf', 'wb') as fp:
+    for chunk in response.iter_content(1024):  # 1024 is the chunk size
+        fp.write(chunk)
 ```
