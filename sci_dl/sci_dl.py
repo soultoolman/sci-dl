@@ -123,7 +123,7 @@ class Sci(object):
 
     def parse_pdf_url(self, content):
         soup = BeautifulSoup(content, features='html.parser')
-        iframe = soup.find('iframe', id='pdf')
+        iframe = soup.find('embed', id='pdf')
         if (iframe is None) or ('src' not in iframe.attrs):
             return None
         pdf_url = iframe.attrs['src']
