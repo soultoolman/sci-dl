@@ -18,11 +18,7 @@ HEADERS = {
         'Chrome/89.0.4389.90 Safari/537.36'
     )
 }
-DEFAULT_CONFIG = {
-    'base_url': 'https://sci-hub.se',
-    'retries': 5,
-    'use_proxy': False
-}
+DEFAULT_CONFIG = {'base_url': 'https://sci-hub.se', 'retries': 5, 'use_proxy': False}
 
 
 class SciDlError(Exception):
@@ -35,12 +31,7 @@ def is_valid_doi(doi):
 
 class Proxy(object):
     def __init__(
-            self,
-            protocol='socks5',
-            user='',
-            password='',
-            host='127.0.0.1',
-            port=1080
+        self, protocol='socks5', user='', password='', host='127.0.0.1', port=1080
     ):
         self.protocol = protocol
         self.user = user
@@ -55,22 +46,17 @@ class Proxy(object):
                 user=self.user,
                 password=quote(self.password),
                 host=self.host,
-                port=self.port
+                port=self.port,
             )
         return '{protocol}://{host}:{port}'.format(
-            protocol=self.protocol,
-            host=self.host,
-            port=self.port
+            protocol=self.protocol, host=self.host, port=self.port
         )
 
     def __repr__(self):
         return self.to_url()
 
     def to_requests(self):
-        return {
-            'http': self.to_url(),
-            'https': self.to_url()
-        }
+        return {'http': self.to_url(), 'https': self.to_url()}
 
 
 class Dl(object):
@@ -80,12 +66,7 @@ class Dl(object):
 
     def _dl(self, url):
         proxies = self.proxy.to_requests() if self.proxy else None
-        return requests.get(
-            url,
-            headers=HEADERS,
-            stream=True,
-            proxies=proxies
-        )
+        return requests.get(url, headers=HEADERS, stream=True, proxies=proxies)
 
     def dl(self, url):
         for i in range(self.retries):
@@ -112,22 +93,20 @@ class Sci(object):
         return urljoin(self.base_url, doi)
 
     def clean_pdf_url(self, pdf_url):
-        # 去除#view=FitH
-        if pdf_url[-10:] == '#view=FitH':
-            pdf_url = pdf_url[: -10]
-        # 有些地址没有协议，现在加上协议
-        if not (pdf_url.startswith('https') or pdf_url.startswith('http')):
-            pdf_url = '%s:%s' % (self.get_protocol(), pdf_url)
-        pdf_url = pdf_url.replace(r'\/', '/')
-        return pdf_url
+        # 找到/downloads位置
+        index = pdf_url.find('/downloads')
+        return pdf_url[index:-1]
 
     def parse_pdf_url(self, content):
         soup = BeautifulSoup(content, features='html.parser')
-        iframe = soup.find('embed', id='pdf')
-        if (iframe is None) or ('src' not in iframe.attrs):
+        buttons = soup.find('div', id='buttons')
+        if not buttons:
             return None
-        pdf_url = iframe.attrs['src']
-        return self.clean_pdf_url(pdf_url)
+        pdf_url = None
+        for button in buttons.find_all('button'):
+            if 'save' in button.string:
+                pdf_url = button.attrs['onclick']
+        return (self.base_url + self.clean_pdf_url(pdf_url)) if pdf_url else None
 
 
 def dl_by_doi(doi, config=None):
@@ -161,6 +140,7 @@ def dl_by_doi(doi, config=None):
     Raises:
         SciDlError
     """
+
     def get(key):
         if key not in config:
             raise SciDlError(_("malformed configuration, can't find %s") % key)
@@ -178,7 +158,7 @@ def dl_by_doi(doi, config=None):
             user=get('proxy_user'),
             password=get('proxy_password'),
             host=get('proxy_host'),
-            port=get('proxy_port')
+            port=get('proxy_port'),
         )
     dl = Dl(get('retries'), proxy)
 
