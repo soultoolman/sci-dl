@@ -93,9 +93,13 @@ class Sci(object):
         return urljoin(self.base_url, doi)
 
     def clean_pdf_url(self, pdf_url):
-        # 找到/downloads位置
-        index = pdf_url.find('/downloads')
-        return pdf_url[index:-1]
+        # 清除location.href=' 和 末尾'
+        pdf_url = pdf_url.replace("location.href='", '')[:-1]
+        if pdf_url.startswith('/downloads'):
+            return pdf_url
+        elif pdf_url.startswith('//'):
+            return 'https:' + pdf_url
+        return pdf_url
 
     def parse_pdf_url(self, content):
         soup = BeautifulSoup(content, features='html.parser')
@@ -106,7 +110,14 @@ class Sci(object):
         for button in buttons.find_all('button'):
             if 'save' in button.string:
                 pdf_url = button.attrs['onclick']
-        return (self.base_url + self.clean_pdf_url(pdf_url)) if pdf_url else None
+        if not pdf_url:
+            return None
+        cleaned_url = self.clean_pdf_url(pdf_url)
+        return (
+            cleaned_url
+            if cleaned_url.startswith('http')
+            else self.base_url + cleaned_url
+        )
 
 
 def dl_by_doi(doi, config=None):
